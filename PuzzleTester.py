@@ -40,7 +40,7 @@ class PuzzleTester(object):
         that location in the trigger list to see which cubes to invert from OFF/ON and vice versa. """
         for x in self.trigger_list[location-1]:
             # Get the 2D position of x so as to activate or deactivate that cube.
-            (row, column) = self.convert_to_board_position(location)
+            (row, column) = self.convert_to_board_position(x)
 
             # If the cube is off turn it on and vise versa
             if self.puzzle_board[row][column] == 0:

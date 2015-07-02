@@ -6,7 +6,7 @@ class GameHandler(object):
     # Default Constructor
     def __init__(self):
         # todo: replace this with a class used specifically for graphic processing instead of text
-        self.puzzle_tester = PuzzleTester.PuzzleTester(3)
+        self.puzzle_tester = PuzzleTester.PuzzleTester(5)
         pass
 
     # Handle Game Logic

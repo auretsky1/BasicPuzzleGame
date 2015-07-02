@@ -1,9 +1,11 @@
+import PuzzleTester
 import pygame
 
 
 class GameHandler(object):
     # Default Constructor
     def __init__(self):
+        puzzle_tester = PuzzleTester.PuzzleTester(3)
         pass
 
     # Handle Game Logic

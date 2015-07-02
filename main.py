@@ -13,7 +13,7 @@ pygame.font.init()
 pygame.display.set_caption("Puzzle Game")
 
 # Initialize the screen
-game_screen = pygame.display.set_mode(SCREEN_SIZE, SCREEN_FLAGS, SCREEN_DEPTH)
+# FIXME: game_screen = pygame.display.set_mode(SCREEN_SIZE, SCREEN_FLAGS, SCREEN_DEPTH)
 game_handler = GameHandler.GameHandler()
 
 # Create the game clock
@@ -32,13 +32,13 @@ while is_game_running:
     game_handler.game_logic()
 
     # Clear the screen
-    game_screen.fill(BLACK)
+    # FIXME: game_screen.fill(BLACK)
 
     # Draw game objects
     game_handler.draw_game_objects()
 
     # Draw the screen
-    pygame.display.flip()
+    # FIXME: pygame.display.flip()
 
     # Frame-rate
     game_clock.tick(60)

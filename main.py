@@ -14,7 +14,7 @@ pygame.display.set_caption("Puzzle Game")
 
 # Initialize the screen
 game_screen = pygame.display.set_mode(SCREEN_SIZE, SCREEN_FLAGS, SCREEN_DEPTH)
-game_handler = GameHandler.GameHandler()
+game_handler = GameHandler.GameHandler(game_screen)
 
 # Create the game clock
 game_clock = pygame.time.Clock()

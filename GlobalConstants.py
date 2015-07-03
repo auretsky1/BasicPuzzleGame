@@ -1,5 +1,5 @@
 # Screen Constants
-SCREEN_SIZE = (500, 500)
+SCREEN_SIZE = (600, 600)
 SCREEN_FLAGS = 0
 SCREEN_DEPTH = 0
 

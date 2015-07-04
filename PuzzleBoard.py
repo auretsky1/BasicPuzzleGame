@@ -3,6 +3,7 @@
     board. It checks for completion and can alter the puzzle accordingly. A new instance of this class should be
     created each time a new puzzle is desired. """
 import PuzzleGenerator
+import PuzzleGraphics
 
 
 class PuzzleBoard(object):
@@ -15,6 +16,7 @@ class PuzzleBoard(object):
 
         # Acquire a trigger list given the size of this map
         self.trigger_list = PuzzleGenerator.generate_trigger_list(size)
+
 
         # Set the size of the board for this object (width = height = size)
         self.puzzle_board_size = size

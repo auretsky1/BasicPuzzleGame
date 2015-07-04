@@ -27,6 +27,8 @@ while is_game_running:
             is_game_running = False
         if event.type == pygame.KEYDOWN:
             game_handler.process_event(event)
+        if event.type == pygame.MOUSEMOTION:
+            game_handler.process_event(event)
 
     # Do game logic
     game_handler.game_logic()

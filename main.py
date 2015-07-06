@@ -23,12 +23,10 @@ game_clock = pygame.time.Clock()
 while is_game_running:
     # Process events
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT:  # Used to exit the program
             is_game_running = False
-        if event.type == pygame.KEYDOWN:
-            game_handler.process_event(event)
-        if event.type == pygame.MOUSEMOTION:
-            game_handler.process_event(event)
+        else:
+            game_handler.process_event(event)  # Otherwise send processing to GameHandler
 
     # Do game logic
     game_handler.game_logic()

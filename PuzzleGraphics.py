@@ -31,8 +31,8 @@ class PuzzleGraphics(object):
         self.n_max = self.size ** 2
 
         # Creates the images of the cube
-        self.on_cube = self.create_image('Images/lightblue.png')
-        self.off_cube = self.create_image('Images/gray.png')
+        self.on_cube = self.create_image('Images/lightblue.jpg')
+        self.off_cube = self.create_image('Images/gray.jpg')
 
         # Create a list of surfaces that will hold each cube
         self.puzzle_board = self.create_cube_surface()
@@ -67,23 +67,22 @@ class PuzzleGraphics(object):
             self.puzzle_board[y] = cube
 
     def convert_to_list_position(self):
-        y_pos = self.mouse_pos[0]//self.cube_width
-        x_pos = self.mouse_pos[1]//self.cube_length
+        y_pos = self.mouse_pos[0] // self.cube_width
+        x_pos = self.mouse_pos[1] // self.cube_length
         list_location = (x_pos * self.size) + y_pos
         self.turn_off(list_location)
         self.change_to_on(list_location)
 
     # Checks to see if mouse is hovering over a cube
     def is_highlighted(self):
-        if self.mouse_pos[0] < 0 or self.mouse_pos[0] > self.puzzle_area[0]\
-                or self.mouse_pos[1] < 0 or self.mouse_pos[1] > self.puzzle_area[1]:
+        if self.mouse_pos[0] < 0 or self.mouse_pos[0] > self.puzzle_area[0] - 1\
+                or self.mouse_pos[1] < 0 or self.mouse_pos[1] > self.puzzle_area[1] - 1:
             return False
         else:
             self.convert_to_list_position()
 
     # Loads and creates an image
     def create_image(self, Name):
-
         # Loads the image
         image = pygame.image.load(Name).convert()
 
@@ -119,9 +118,13 @@ class PuzzleGraphics(object):
         self.mouse_pos = (mouse_x, mouse_y)
         self.is_highlighted()
 
+        # Check if highlighted
+        # Call convert to list position
+        # Call turn_off_cubes
+        # Turn on cubes for the list position
+
     def draw_puzzle_board(self):
         # Draws cubes to puzzle board surface
-
         for x in range(self.n_max):
             puzzle_row = x // self.size
             puzzle_column = x % self.size

@@ -38,15 +38,23 @@ class GameHandler(object):
         # Create the image to be used for the background as a pygame surface
         self.background_image = pygame.image.load("Images/background.jpg").convert()
 
+        self.mouse_down = 0
+
     # Handle Game Logic
     def game_logic(self):
         # If the current position is not the old position the player has moved the mouse
         if self.previous_position != self.current_position:
             # Set the previous position to the new position and process the change
             self.previous_position = self.current_position
-
             # Tell the GUI for the puzzle to update
             self.puzzle_graphic.update_mouse_pos(self.current_position)
+        if self.mouse_down == 1:
+            location = self.puzzle_graphic.activate_cube(self.current_position)
+            self.puzzle_board.activate_board_location(location)
+            self.puzzle_graphic.set_activation_list(self.puzzle_board.puzzle_board)
+            self.puzzle_graphic.draw_puzzle_board()
+
+
 
     # Handle Drawing Game Objects
     def draw_game_objects(self):
@@ -78,6 +86,10 @@ class GameHandler(object):
             self.game_time_and_score = self.game_instance.update_time()
         if event.type == pygame.MOUSEMOTION:
             self.current_position = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.mouse_down = 1
+        else:
+            self.mouse_down = 0
 
     # Draw the timer to the upper left corner of the screen
     def draw_timer_and_score(self, time_and_score_string):

@@ -59,28 +59,25 @@ class PuzzleGraphics(object):
         self.activations = activation_list
 
     # Sets cube to on
-    def change_to_on(self, x):
-        check_on_value = self.on_cube.get_at((0, 0))
-        check_off_value = self.off_cube.get_at((0, 0))
-        check_current_value = self.puzzle_board[x].get_at((0, 0))
+    def highlight(self, x):
         for y in range(len(self.trigger_list[x])):
-            element = self.trigger_list[x][y] - 1
-            if check_on_value == check_current_value:
+            element = self.trigger_list[x][y] -1
+            puzzle_row = element // self.size
+            puzzle_column = element % self.size
+            if self.activations[puzzle_row][puzzle_column] == 1:
                 self.puzzle_board[element].blit(self.off_cube, [0, 0])
-            if check_off_value == check_current_value:
+            if self.activations[puzzle_row][puzzle_column] == 0:
                 self.puzzle_board[element].blit(self.on_cube, [0, 0])
 
     # Sets all cubes to off depending on there activation status
     def change_to_off(self):
         for x in range(len(self.activations)):
             for y in range(len(self.activations[x])):
-                row = x // self.size
-                column = y % self.size
                 element = (x * self.size) + y
-                if self.activations[row][column] == 0:
-                    self.puzzle_board[element].blit(self.off_cube, [0, 0])
-                else:
+                if self.activations[x][y] == 1:
                     self.puzzle_board[element].blit(self.on_cube, [0, 0])
+                else:
+                    self.puzzle_board[element].blit(self.off_cube, [0, 0])
 
     # converts the mouse position to a location in a list
     def convert_to_list_position(self):
@@ -136,11 +133,25 @@ class PuzzleGraphics(object):
             # Call turn_off_cubes
             self.change_to_off()
             # Turn on cubes for the list position
-            self.change_to_on(list_location)
+            self.highlight(list_location)
             self.draw_puzzle_board()
         else:
             self.change_to_off()
             self.draw_puzzle_board()
+
+    def turn_on(self, x):
+        for y in range(len(self.trigger_list[x])):
+            element = self.trigger_list[x][y] - 1
+            self.puzzle_board[element].blit(self.on_cube, [0, 0])
+
+    def activate_cube(self, location):
+        mouse_x = location[0] - self.board_position[0]
+        mouse_y = location[1] - self.board_position[1]
+        self.mouse_pos = (mouse_x, mouse_y)
+        list_location = self.convert_to_list_position()
+        self.turn_on(list_location)
+        list_location += 1
+        return list_location
 
     def draw_puzzle_board(self):
         # Draws cubes to puzzle board surface
@@ -152,6 +163,8 @@ class PuzzleGraphics(object):
             self.puzzle_image.blit(self.puzzle_board[x], [cube_x, cube_y])
 
         return self.puzzle_image
+
+
 
 
 

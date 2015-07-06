@@ -8,16 +8,16 @@ class GameHandler(object):
     # Default Constructor
     def __init__(self, game_screen):
         self.game_screen = game_screen
-        self.board_position = (100, 200)
 
         # Set up the puzzle board to be used for this round
         self.puzzle_board = PuzzleBoard.PuzzleBoard(5)
 
         # Set up the graphical representation of the puzzle board as seen by the user
-        self.puzzle_graphic = PuzzleGraphics.PuzzleGraphics(5)
+        self.puzzle_graphic = PuzzleGraphics.PuzzleGraphics(self.puzzle_board.puzzle_board_size)
 
         # Set the graphics representation of our trigger list
-        self.puzzle_graphic.get_trigger_list(self.puzzle_board.trigger_list)
+        self.puzzle_graphic.set_trigger_list(self.puzzle_board.trigger_list)
+        self.puzzle_graphic.set_activation_list(self.puzzle_board.puzzle_board)
 
         # Create a timer to use for all game timing events
         self.game_timer = GameTimer.GameTimer()

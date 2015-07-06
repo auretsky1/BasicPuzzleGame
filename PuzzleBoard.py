@@ -3,7 +3,6 @@
     board. It checks for completion and can alter the puzzle accordingly. A new instance of this class should be
     created each time a new puzzle is desired. """
 import PuzzleGenerator
-import PuzzleGraphics
 
 
 class PuzzleBoard(object):

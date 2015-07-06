@@ -6,20 +6,24 @@ from GlobalConstants import *
 
 
 class PuzzleGraphics(object):
-
-    # get the position of the mouse
+    # Constructor
     def __init__(self, size=3):
         # Get the size of the puzzle board
         self.size = size
 
         # Sets size of puzzle board image
-        self.width = SCREEN_SIZE[0] // 2
-        self.length = SCREEN_SIZE[1] // 2
+        self.width = int(SCREEN_SIZE[0] / 1.75)
+        self.length = int(SCREEN_SIZE[1] / 1.75)
         self.puzzle_area = (self.width, self.length)
 
         # Set the unit for each cube
         self.cube_width = self.puzzle_area[0] // self.size
         self.cube_length = self.puzzle_area[1] // self.size
+
+        # Reset puzzle area based on cube width and length
+        self.width = self.cube_width * self.size
+        self.length = self.cube_length * self.size
+        self.puzzle_area = (self.width, self.length)
 
         # Get the position of the puzzle board that is drawn to the screen
         self.board_position = self.set_position()

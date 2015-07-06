@@ -36,6 +36,17 @@ class GameTimer(object):
         # Set the goal time to the time given so we know we are counting up
         self.goal_time = time
 
+    # Set the timer to count up to infinity
+    def countup_forever(self):
+        # Unfreeze the timer if frozen
+        self.freeze_timer = False
+
+        # Set the current time to 0 to start the counting
+        self.current_time = -1
+
+        # Set the goal time to be -2 thus allowing the clock to count up forever
+        self.goal_time = -2
+
     # Check the timer to see if it's reached it's goal time
     def timer_check(self):
         # We know we have reached our goal when the current time and goal time are equal
@@ -71,7 +82,7 @@ class GameTimer(object):
         # Only tick the clock if the timer is not frozen
         if not self.freeze_timer:
             # If goal_time is above 0 we are counting up
-            if self.goal_time > 0:
+            if self.goal_time > 0 or self.goal_time < 0:
                 self.current_time += 1
             else:
                 self.current_time -= 1

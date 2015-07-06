@@ -4,7 +4,6 @@
     created each time a new puzzle is desired. """
 import PuzzleGenerator
 
-
 class PuzzleBoard(object):
     def __init__(self, size=3):
         # Create the puzzle board and default each cube to off position
@@ -15,7 +14,6 @@ class PuzzleBoard(object):
 
         # Acquire a trigger list given the size of this map
         self.trigger_list = PuzzleGenerator.generate_trigger_list(size)
-
 
         # Set the size of the board for this object (width = height = size)
         self.puzzle_board_size = size

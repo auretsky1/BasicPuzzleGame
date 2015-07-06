@@ -54,7 +54,7 @@ class PuzzleGraphics(object):
     def set_activation_list(self, activation_list):
         self.activations = activation_list
 
-    # Sets highlighted cubes to on
+    # Sets cube to on
     def change_to_on(self, x):
         check_on_value = self.on_cube.get_at((0, 0))
         check_off_value = self.off_cube.get_at((0, 0))
@@ -66,7 +66,7 @@ class PuzzleGraphics(object):
             if check_off_value == check_current_value:
                 self.puzzle_board[element].blit(self.on_cube, [0, 0])
 
-    # Sets all cubes to off
+    # Sets all cubes to off depending on there activation status
     def change_to_off(self):
         for x in range(len(self.activations)):
             for y in range(len(self.activations[x])):

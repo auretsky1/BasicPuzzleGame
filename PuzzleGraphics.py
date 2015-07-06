@@ -149,9 +149,12 @@ class PuzzleGraphics(object):
         mouse_x = location[0] - self.board_position[0]
         mouse_y = location[1] - self.board_position[1]
         self.mouse_pos = (mouse_x, mouse_y)
-        list_location = self.convert_to_list_position()
-        list_location += 1
-        return list_location
+        if self.is_highlighted():
+            list_location = self.convert_to_list_position()
+            list_location += 1
+            return list_location
+        else:
+            return False
 
     def draw_puzzle_board(self):
         # Draws cubes to puzzle board surface

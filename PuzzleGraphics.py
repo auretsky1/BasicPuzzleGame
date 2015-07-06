@@ -58,16 +58,22 @@ class PuzzleGraphics(object):
     def set_activation_list(self, activation_list):
         self.activations = activation_list
 
-    # Sets cube to on
+    # Highlights cubes that are being hovered by mouse
     def highlight(self, x):
         for y in range(len(self.trigger_list[x])):
-            element = self.trigger_list[x][y] -1
-            puzzle_row = element // self.size
-            puzzle_column = element % self.size
-            if self.activations[puzzle_row][puzzle_column] == 1:
-                self.puzzle_board[element].blit(self.off_cube, [0, 0])
-            if self.activations[puzzle_row][puzzle_column] == 0:
+            element = self.trigger_list[x][y] - 1
+            current_puzzle_row = element // self.size
+            current_puzzle_column = element % self.size
+            trigger = self.trigger_list[x][0] - 1
+            trigger_puzzle_row = trigger // self.size
+            trigger_puzzle_column = trigger % self.size
+            if self.activations[trigger_puzzle_row][trigger_puzzle_column] == 0:
                 self.puzzle_board[element].blit(self.on_cube, [0, 0])
+                if self.activations[current_puzzle_row][current_puzzle_column] == 1:
+                    self.puzzle_board[element].blit(self.off_cube, [0, 0])
+            if self.activations[trigger_puzzle_row][trigger_puzzle_column] == 1:
+                if self.activations[current_puzzle_row][current_puzzle_column] == 0:
+                    self.puzzle_board[element].blit(self.on_cube, [0, 0])
 
     # Sets all cubes to off depending on there activation status
     def change_to_off(self):
@@ -139,17 +145,11 @@ class PuzzleGraphics(object):
             self.change_to_off()
             self.draw_puzzle_board()
 
-    def turn_on(self, x):
-        for y in range(len(self.trigger_list[x])):
-            element = self.trigger_list[x][y] - 1
-            self.puzzle_board[element].blit(self.on_cube, [0, 0])
-
     def activate_cube(self, location):
         mouse_x = location[0] - self.board_position[0]
         mouse_y = location[1] - self.board_position[1]
         self.mouse_pos = (mouse_x, mouse_y)
         list_location = self.convert_to_list_position()
-        self.turn_on(list_location)
         list_location += 1
         return list_location
 

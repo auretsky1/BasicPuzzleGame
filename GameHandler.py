@@ -50,12 +50,14 @@ class GameHandler(object):
             self.puzzle_graphic.update_mouse_pos(self.current_position)
         if self.mouse_down == 1:
             location = self.puzzle_graphic.activate_cube(self.current_position)
-            self.puzzle_board.activate_board_location(location)
+            is_board_complete = self.puzzle_board.activate_board_location(location)
             self.puzzle_graphic.set_activation_list(self.puzzle_board.puzzle_board)
+            self.puzzle_graphic.change_to_off()
             self.puzzle_graphic.draw_puzzle_board()
             self.mouse_down = 0
-
-
+            if is_board_complete:
+                self.puzzle_board.reset_puzzle_board()
+                self.game_instance.board_complete()
 
     # Handle Drawing Game Objects
     def draw_game_objects(self):

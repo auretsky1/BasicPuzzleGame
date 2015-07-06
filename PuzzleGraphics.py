@@ -6,7 +6,6 @@ import PuzzleBoard
 from GlobalConstants import *
 
 
-
 class PuzzleGraphics(object):
 
     # get the position of the mouse

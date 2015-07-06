@@ -53,6 +53,7 @@ class GameHandler(object):
             self.puzzle_board.activate_board_location(location)
             self.puzzle_graphic.set_activation_list(self.puzzle_board.puzzle_board)
             self.puzzle_graphic.draw_puzzle_board()
+            self.mouse_down = 0
 
 
 
@@ -88,8 +89,6 @@ class GameHandler(object):
             self.current_position = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.mouse_down = 1
-        else:
-            self.mouse_down = 0
 
     # Draw the timer to the upper left corner of the screen
     def draw_timer_and_score(self, time_and_score_string):

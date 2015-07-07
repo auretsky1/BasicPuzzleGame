@@ -7,6 +7,7 @@ import PuzzleGraphics
 class GameHandler(object):
     # Default Constructor
     def __init__(self, game_screen):
+        # Variable that holds reference to main pygame surface
         self.game_screen = game_screen
 
         # This variable will hold the game instance after the user has made a menu selection
@@ -26,19 +27,17 @@ class GameHandler(object):
         self.previous_position = pygame.mouse.get_pos()
         self.current_position = pygame.mouse.get_pos()
 
-        # Create a string that holds the current time
+        # Create a string that holds the current time and score
         self.game_time_and_score = ["0:00", "Score:0"]
 
         # Create a pygame event that will be called each second to update the game timer
         pygame.time.set_timer(pygame.USEREVENT+1, 1000)
 
-        # Set the timer font
+        # Set the timer and score font
         self.game_font = pygame.font.SysFont("monospace", 24)
 
         # Create the image to be used for the background as a pygame surface
         self.background_image = pygame.image.load("Images/background.jpg").convert()
-
-        self.mouse_down = 0
 
     # Handle Game Logic
     def game_logic(self):
@@ -48,19 +47,6 @@ class GameHandler(object):
             self.previous_position = self.current_position
             # Tell the GUI for the puzzle to update
             self.puzzle_graphic.update_mouse_pos(self.current_position)
-        if self.mouse_down == 1:
-            location = self.puzzle_graphic.activate_cube(self.current_position)
-            if not location:
-                self.mouse_down = 0
-            else:
-                is_board_complete = self.puzzle_board.activate_board_location(location)
-                self.puzzle_graphic.set_activation_list(self.puzzle_board.puzzle_board)
-                self.puzzle_graphic.change_to_off()
-                self.puzzle_graphic.draw_puzzle_board()
-                self.mouse_down = 0
-                if is_board_complete:
-                    self.puzzle_board.reset_puzzle_board()
-                    self.game_instance.board_complete()
 
     # Handle Drawing Game Objects
     def draw_game_objects(self):
@@ -76,6 +62,7 @@ class GameHandler(object):
 
     # Handle User Input
     def process_event(self, event):
+        # Keys are used to switch between game modes and board sizes in endless mode
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_1:
                 self.reinitialize_game(1)
@@ -87,13 +74,12 @@ class GameHandler(object):
                 self.reinitialize_game(4)
             elif event.key == pygame.K_s and self.game_instance.game_mode == 1:
                 self.reinitialize_game(5)
-
         if event.type == pygame.USEREVENT+1:  # GameTimer tick
             self.game_time_and_score = self.game_instance.update_time()
-        if event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEMOTION:  # Player has moved the mouse
             self.current_position = pygame.mouse.get_pos()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.mouse_down = 1
+        if event.type == pygame.MOUSEBUTTONUP:  # Player clicked the button and released
+            self.player_click()
 
     # Draw the timer to the upper left corner of the screen
     def draw_timer_and_score(self, time_and_score_string):
@@ -105,6 +91,18 @@ class GameHandler(object):
 
         # Blit the newly rendered text to the main game screen
         self.game_screen.blit(display_render, (0, 0))
+
+    # Called when the player has pressed and released the mouse button
+    def player_click(self):
+            location = self.puzzle_graphic.activate_cube(self.current_position)
+            if location:
+                is_board_complete = self.puzzle_board.activate_board_location(location)
+                self.puzzle_graphic.set_activation_list(self.puzzle_board.puzzle_board)
+                self.puzzle_graphic.change_to_off()
+                self.puzzle_graphic.draw_puzzle_board()
+                if is_board_complete:
+                    self.puzzle_board.reset_puzzle_board()
+                    self.game_instance.board_complete()
 
     # Alter the game mode and reinitialize components
     def reinitialize_game(self, game_mode):

@@ -74,6 +74,7 @@ class GameHandler(object):
                 self.reinitialize_game(4)
             elif event.key == pygame.K_s and self.game_instance.game_mode == 1:
                 self.reinitialize_game(5)
+
         if event.type == pygame.USEREVENT+1:  # GameTimer tick
             self.game_time_and_score = self.game_instance.update_time()
         if event.type == pygame.MOUSEMOTION:  # Player has moved the mouse

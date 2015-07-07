@@ -38,7 +38,6 @@ class PuzzleGraphics(object):
         # Creates the images of the cube
         self.on_cube = self.create_image('Images/lightblue.jpg')
         self.off_cube = self.create_image('Images/gray.jpg')
-
         # Create a list of surfaces that will hold each cube
         self.puzzle_board = self.create_cube_surface()
 
@@ -67,13 +66,30 @@ class PuzzleGraphics(object):
             trigger = self.trigger_list[x][0] - 1
             trigger_puzzle_row = trigger // self.size
             trigger_puzzle_column = trigger % self.size
-            if self.activations[trigger_puzzle_row][trigger_puzzle_column] == 0:
-                self.puzzle_board[element].blit(self.on_cube, [0, 0])
-                if self.activations[current_puzzle_row][current_puzzle_column] == 1:
-                    self.puzzle_board[element].blit(self.off_cube, [0, 0])
-            if self.activations[trigger_puzzle_row][trigger_puzzle_column] == 1:
-                if self.activations[current_puzzle_row][current_puzzle_column] == 0:
-                    self.puzzle_board[element].blit(self.on_cube, [0, 0])
+            highlight_top = pygame.Surface([self.cube_width, 2])
+            highlight_sides = pygame.Surface([2, self.cube_length])
+            if self.activations[current_puzzle_row][current_puzzle_column] == 0:
+                highlight_top.fill(BLUE)
+                highlight_sides.fill(BLUE)
+                self.puzzle_board[element].blit(highlight_top, [0, 0])
+                self.puzzle_board[element].blit(highlight_top, [0, self.cube_length - 2])
+                self.puzzle_board[element].blit(highlight_sides, [self.cube_width - 2, 0])
+                self.puzzle_board[element].blit(highlight_sides, [0, 0])
+            if self.activations[current_puzzle_row][current_puzzle_column] == 1:
+                highlight_top.fill(RED)
+                highlight_sides.fill(RED)
+                self.puzzle_board[element].blit(highlight_top, [0, 0])
+                self.puzzle_board[element].blit(highlight_top, [0, self.cube_length - 2])
+                self.puzzle_board[element].blit(highlight_sides, [self.cube_width - 2, 0])
+                self.puzzle_board[element].blit(highlight_sides, [0, 0])
+            # if self.activations[trigger_puzzle_row][trigger_puzzle_column] == 0:
+            #     self.puzzle_board[element].blit(self.on_cube, [0, 0])
+            #     if self.activations[current_puzzle_row][current_puzzle_column] == 1:
+            #         self.puzzle_board[element].blit(self.off_cube, [0, 0])
+            # if self.activations[trigger_puzzle_row][trigger_puzzle_column] == 1:
+            #     self.puzzle_board[element].blit(self.off_cube, [0, 0])
+            #     if self.activations[current_puzzle_row][current_puzzle_column] == 0:
+            #         self.puzzle_board[element].blit(self.on_cube, [0, 0])
 
     # Sets all cubes to off depending on there activation status
     def change_to_off(self):

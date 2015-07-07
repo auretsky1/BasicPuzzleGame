@@ -102,8 +102,18 @@ class GameHandler(object):
                 self.puzzle_graphic.change_to_off()
                 self.puzzle_graphic.draw_puzzle_board()
                 if is_board_complete:
-                    self.puzzle_board.reset_puzzle_board()
+                    # Tell the game instance the board has been completed
                     self.game_instance.board_complete()
+
+                    # Create a new puzzle board with the provided board size
+                    self.puzzle_board = PuzzleBoard.PuzzleBoard(self.game_instance.board_size)
+
+                    # Set up the graphical representation of the puzzle board as seen by the user
+                    self.puzzle_graphic = PuzzleGraphics.PuzzleGraphics(self.puzzle_board.puzzle_board_size)
+
+                    # Set the graphics representation of our trigger list
+                    self.puzzle_graphic.set_trigger_list(self.puzzle_board.trigger_list)
+                    self.puzzle_graphic.set_activation_list(self.puzzle_board.puzzle_board)
 
     # Alter the game mode and reinitialize components
     def reinitialize_game(self, game_mode):

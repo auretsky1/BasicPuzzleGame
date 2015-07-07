@@ -2,6 +2,7 @@
     timer has reached 0 or has counted up to a goal time. The timer can be reset by calling one of the
     set functions."""
 
+
 class GameTimer(object):
     # Constructor
     def __init__(self):

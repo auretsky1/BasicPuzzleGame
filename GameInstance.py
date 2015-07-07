@@ -86,7 +86,7 @@ class GameInstance(object):
                 self.board_size = 3
 
             # Increase the timer for the next level of time-trial
-            self.game_timer.countdown(self.board_size * (self.board_size - 2))
+            self.game_timer.countdown((self.board_size * (self.board_size - 2) * 60))
 
             # Return board size to the caller
             return self.board_size
